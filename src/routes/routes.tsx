@@ -5,6 +5,7 @@ import Register from '../pages/Register'
 import { routeGenerator } from '../utils/routesGenerator'
 import { adminPaths } from './admin.routes'
 import MainLayout from '../layout/MainLayout'
+import { userPaths } from './user.routes'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,15 @@ const router = createBrowserRouter([
       // </ProtectedRoute>
     ),
     children: routeGenerator(adminPaths),
+  },
+  {
+    path: '/user',
+    element: (
+      // <ProtectedRoute role='admin'>
+      <MainLayout />
+      // </ProtectedRoute>
+    ),
+    children: routeGenerator(userPaths),
   },
   // {
   //   path: '/edit-car/:carId',

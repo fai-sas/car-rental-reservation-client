@@ -6,6 +6,7 @@ import { verifyToken } from '../utils/verifyToken'
 import { sidebarItemsGenerator } from '../utils/sidebarItemsGenerator'
 import { adminPaths } from '../routes/admin.routes'
 import { TUser, useCurrentToken } from '../redux/features/auth/authSlice'
+import { userPaths } from '../routes/user.routes'
 
 const { Sider } = Layout
 
@@ -29,9 +30,9 @@ const Sidebar = () => {
     case userRole.ADMIN:
       sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN)
       break
-    // case userRole.USER:
-    //   sidebarItems = sidebarItemsGenerator(userPaths, userRole.USER)
-    //   break
+    case userRole.USER:
+      sidebarItems = sidebarItemsGenerator(userPaths, userRole.USER)
+      break
 
     default:
       break
