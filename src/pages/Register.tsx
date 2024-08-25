@@ -1,24 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Row } from 'antd'
 import { FieldValues } from 'react-hook-form'
-import { useAppDispatch } from '../redux/hooks'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import FormController from '../components/Form/FormController'
 import FormInput from '../components/Form/FormInput'
 import { useRegisterMutation } from '../redux/features/auth/authApi'
-import { verifyToken } from '../utils/verifyToken'
-import { setUser, TUser } from '../redux/features/auth/authSlice'
 import FormSelect from '../components/Form/FormSelect'
+import { roleOptions } from '../utils/selectOptions'
 
 const Register = () => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-
-  const roleOptions = [
-    { label: 'User', value: 'user' },
-    { label: 'Admin', value: 'admin' },
-  ]
 
   const defaultValues = {
     email: 'admin4@admin.com',

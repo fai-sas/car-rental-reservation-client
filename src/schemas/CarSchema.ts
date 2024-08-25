@@ -4,6 +4,9 @@ export const addCarValidationSchema = z.object({
   name: z.string({
     required_error: 'Please select a Name',
   }),
+  image: z.string({
+    required_error: 'Please provide image',
+  }),
   description: z.string({
     required_error: 'A brief description of the car is required',
   }),
@@ -15,6 +18,9 @@ export const addCarValidationSchema = z.object({
       required_error: 'The status of the car is required',
     })
     .default('available'),
+  carType: z.enum(['SUV', 'Hybrid', 'Sedan'], {
+    required_error: 'The status of the car is required',
+  }),
   features: z
     .array(
       z.enum(
@@ -55,13 +61,6 @@ export const addCarValidationSchema = z.object({
       required_error: 'The location of the car is required',
     }
   ),
-  // images: z
-  //   .array(z.string(), {
-  //     required_error: 'At least one image of the car is required',
-  //   })
-  //   .min(1, {
-  //     message: 'At least one image of the car is required',
-  //   }),
   year: z.string({
     required_error: 'The manufacturing year of the car is required',
   }),
