@@ -35,7 +35,7 @@ export const addCarValidationSchema = z.object({
     .min(1, {
       message: 'At least one feature is required',
     }),
-  pricePerHour: z.number({
+  pricePerHour: z.string({
     required_error: 'The cost per hour of booking is required',
   }),
   location: z.enum(
@@ -55,20 +55,20 @@ export const addCarValidationSchema = z.object({
       required_error: 'The location of the car is required',
     }
   ),
-  images: z
-    .array(z.string(), {
-      required_error: 'At least one image of the car is required',
-    })
-    .min(1, {
-      message: 'At least one image of the car is required',
-    }),
-  year: z.number({
+  // images: z
+  //   .array(z.string(), {
+  //     required_error: 'At least one image of the car is required',
+  //   })
+  //   .min(1, {
+  //     message: 'At least one image of the car is required',
+  //   }),
+  year: z.string({
     required_error: 'The manufacturing year of the car is required',
   }),
   model: z.string({
     required_error: 'The model of the car is required',
   }),
-  seats: z.number({
+  seats: z.string({
     required_error: 'The number of seats is required',
   }),
   fuelType: z.enum(['Petrol', 'Diesel', 'Electric', 'Hybrid'], {

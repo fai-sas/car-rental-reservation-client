@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Col, Flex, Row } from 'antd'
 import FormController from './Form/FormController'
@@ -95,7 +96,10 @@ const AddCar = () => {
 
               <Row>
                 <FormInput type='text' name='color' label='Color' />
-                <FormInput type='text' name='images' label='Image' />
+
+                {/* */}
+
+                {/*  */}
               </Row>
               <Row>
                 <FormInput type='text' name='model' label='Model' />
