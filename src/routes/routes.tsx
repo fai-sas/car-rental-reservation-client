@@ -7,11 +7,16 @@ import { adminPaths } from './admin.routes'
 import MainLayout from '../layout/MainLayout'
 import { userPaths } from './user.routes'
 import ProtectedRoute from '../layout/ProtectedRoute'
+import AboutPage from '../pages/AboutPage'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
+  },
+  {
+    path: '/about',
+    element: <AboutPage />,
   },
   {
     path: '/admin',

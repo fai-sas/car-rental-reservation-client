@@ -37,7 +37,7 @@ const Header = () => {
             Home
           </NavLink>
           <NavLink
-            to='/'
+            to='about'
             className='block px-4 py-2 md:inline-block hover:text-white'
           >
             About Us
