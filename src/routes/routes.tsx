@@ -8,6 +8,7 @@ import MainLayout from '../layout/MainLayout'
 import { userPaths } from './user.routes'
 import ProtectedRoute from '../layout/ProtectedRoute'
 import AboutPage from '../pages/AboutPage'
+import CarDetailsPage from '../pages/CarDetailsPage'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/about',
     element: <AboutPage />,
+  },
+  {
+    path: '/car/:carId',
+    element: <CarDetailsPage />,
   },
   {
     path: '/admin',
@@ -36,10 +41,6 @@ const router = createBrowserRouter([
     ),
     children: routeGenerator(userPaths),
   },
-  // {
-  //   path: '/edit-car/:carId',
-  //   element: <EditCar />,
-  // },
   {
     path: '/login',
     element: <Login />,
