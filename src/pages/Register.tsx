@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Button,
@@ -32,10 +33,8 @@ const Register: React.FC = () => {
         role: values.role,
       }
 
-      // Assuming the `register` function returns a promise with a result
       const response = await register(userInfo).unwrap()
 
-      // Check if the response indicates success
       if (response.success) {
         toast.success('Successfully Registered')
         navigate('/login')
