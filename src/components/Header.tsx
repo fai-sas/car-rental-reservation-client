@@ -57,12 +57,16 @@ const Header = () => {
 
           {/* Login/Sign Up Buttons */}
           <div className='flex flex-col mt-4 space-y-4 md:flex-row md:space-y-0 md:space-x-4 md:mt-0'>
-            <button className='px-4 py-2 text-white bg-gray-700 rounded hover:bg-gray-600'>
-              Login
-            </button>
-            <button className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500'>
-              Sign Up
-            </button>
+            <NavLink to='login'>
+              <button className='px-4 py-2 text-white bg-gray-700 rounded hover:bg-gray-600'>
+                Login
+              </button>
+            </NavLink>
+            <NavLink to='/register'>
+              <button className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500'>
+                Register
+              </button>
+            </NavLink>
           </div>
         </nav>
       </div>
