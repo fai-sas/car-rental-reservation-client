@@ -6,6 +6,7 @@ import { routeGenerator } from '../utils/routesGenerator'
 import { adminPaths } from './admin.routes'
 import MainLayout from '../layout/MainLayout'
 import { userPaths } from './user.routes'
+import ProtectedRoute from '../layout/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -15,18 +16,18 @@ const router = createBrowserRouter([
   {
     path: '/admin',
     element: (
-      // <ProtectedRoute role='admin'>
-      <MainLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute role='admin'>
+        <MainLayout />
+      </ProtectedRoute>
     ),
     children: routeGenerator(adminPaths),
   },
   {
     path: '/user',
     element: (
-      // <ProtectedRoute role='admin'>
-      <MainLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute role='user'>
+        <MainLayout />
+      </ProtectedRoute>
     ),
     children: routeGenerator(userPaths),
   },
