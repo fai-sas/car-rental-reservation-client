@@ -4,6 +4,7 @@ import AdminDashboard from '../pages/AdminDashboard'
 import AllBookings from '../pages/AllBookings'
 import AllCars from '../pages/AllCars'
 import AllUsers from '../pages/AllUsers'
+import ReturnCar from '../pages/ReturnCar'
 
 export const adminPaths = [
   {
@@ -27,6 +28,11 @@ export const adminPaths = [
       {
         path: 'edit-car/:carId',
         element: <EditCar />,
+      },
+      {
+        name: 'Return Car',
+        path: 'return-car',
+        element: <ReturnCar />,
       },
     ],
   },
