@@ -11,28 +11,45 @@ import AboutPage from '../pages/AboutPage'
 import CarDetailsPage from '../pages/CarDetailsPage'
 import CarListing from '../pages/CarListing'
 import BookingPage from '../pages/BookingPage'
+import ErrorPage from '../pages/ErrorPage'
+import BookingForm from '../components/BookingForm'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
+    errorElement: <ErrorPage />,
   },
+
   {
-    path: '/about',
+    path: 'about',
     element: <AboutPage />,
   },
   {
-    path: '/carListing',
+    path: 'carListing',
     element: <CarListing />,
   },
   {
-    path: '/car/:carId',
+    path: 'car/:carId',
     element: <CarDetailsPage />,
   },
   {
-    path: '/booking/:carId',
-    element: <BookingPage />,
+    path: 'booking',
+    element: (
+      <ProtectedRoute role='user'>
+        <BookingPage />
+      </ProtectedRoute>
+    ),
   },
+  {
+    path: 'booking/:id',
+    element: (
+      <ProtectedRoute role='user'>
+        <BookingForm />
+      </ProtectedRoute>
+    ),
+  },
+
   {
     path: '/admin',
     element: (

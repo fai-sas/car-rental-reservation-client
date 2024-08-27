@@ -8,45 +8,40 @@ import FormInput from './Form/FormInput'
 import toast from 'react-hot-toast'
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 import { TResponse } from '../types'
-import { useCreateBookingMutation } from '../redux/features/booking/bookingApi'
+import {
+  useCreateBookingMutation,
+  useGetAllBookingsQuery,
+} from '../redux/features/booking/bookingApi'
 import FormTimePicker from './Form/FormTimePicker'
 import FormDatePicker from './Form/FormDatePicker'
 import FormSelect from './Form/FormSelect'
-import { useParams } from 'react-router-dom'
+import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
 import { featuresOptions, paymentOptions } from '../utils/selectOptions'
 import Header from './Header'
-import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
 
-const BookingForm = () => {
-  const { id } = useParams() // Get carId from URL params
-  const { data } = useGetAllCarsQuery(undefined) // Fetch all cars data
+const BookingForm2 = () => {
+  const [createBooking] = useCreateBookingMutation()
+  const { data: cars, isLoading } = useGetAllCarsQuery(undefined)
 
-  // Create options for FormSelect with car names as labels and IDs as values
-  const carOptions = data?.data?.map((car) => ({
-    label: car.name,
-    value: car._id,
+  const carOptions = cars?.data?.map((item) => ({
+    value: item._id,
+    label: item.name,
   }))
 
-  // Find the car option that matches the carId from the URL
-  const selectedCar = carOptions?.find((car) => car.value === id)
-
-  // Default values for the form
-  const defaultValue = {
-    car: selectedCar ? selectedCar.value : '', // Use car ObjectId if found, else empty
-  }
-
-  const [createBooking] = useCreateBookingMutation()
-
-  // Form submit handler
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const bookingData = {
       ...data,
+      // date: moment(new Date(data.date)).format('"D MMM Y"'),
+      // date: moment(new Date(data.date)).format('"YYYY-MM-DD"'),
       startTime: moment(new Date(data.startTime)).format('HH:mm'),
       endTime: moment(new Date(data.startTime)).format('HH:mm'),
     }
 
+    console.log(bookingData)
+
     try {
       const res = (await createBooking(bookingData)) as TResponse<any>
+      console.log(res)
       if (res.error) {
         toast.error(res?.error?.data?.message)
       } else {
@@ -59,21 +54,14 @@ const BookingForm = () => {
 
   return (
     <>
-      <Header />
       <div>
-        <h1 className='p-12 text-4xl font-bold text-center'>Book Your Car</h1>
+        <h1 className='p-12 text-4xl font-bold text-center'>Book Car</h1>
         <Flex justify='center' align='center'>
           <Col span={12}>
-            <FormController onSubmit={onSubmit} defaultValues={defaultValue}>
+            <FormController onSubmit={onSubmit}>
               <Row gutter={16}>
                 <Col span={12}>
-                  <FormSelect
-                    options={carOptions}
-                    name='car'
-                    label='Car'
-                    defaultValue={selectedCar?.value}
-                    disabled
-                  />
+                  <FormSelect options={carOptions} name='car' label='Car' />
                 </Col>
                 <Col span={12}>
                   <FormDatePicker name='date' label='Date' />
@@ -128,4 +116,4 @@ const BookingForm = () => {
   )
 }
 
-export default BookingForm
+export default BookingForm2

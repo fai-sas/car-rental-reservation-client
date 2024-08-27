@@ -21,6 +21,11 @@ export const carTypeOptions = [
   { label: 'Sedan', value: 'Sedan' },
 ]
 
+export const paymentOptions = [
+  { label: 'Cash', value: 'cash' },
+  { label: 'Card', value: 'card' },
+]
+
 export const fuelOptions = [
   { label: 'Petrol', value: 'Petrol' },
   { label: 'Diesel', value: 'Diesel' },

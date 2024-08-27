@@ -44,11 +44,11 @@ export const adminPaths = [
         path: 'all-bookings',
         element: <AllBookings />,
       },
-      {
-        name: 'Edit Booking',
-        path: 'edit-booking',
-        element: <EditCar />,
-      },
+      // {
+      //   name: 'Edit Booking',
+      //   path: 'edit-booking',
+      //   element: <EditCar />,
+      // },
     ],
   },
   {

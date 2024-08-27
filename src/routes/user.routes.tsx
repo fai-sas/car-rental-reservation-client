@@ -1,4 +1,6 @@
-import BookingForm from '../components/BookingForm'
+import BookingForm2 from '../components/BookingForm2'
+import BookingHistory from '../pages/BookingHistory'
+
 import UserDashboard from '../pages/UserDashboard'
 
 export const userPaths = [
@@ -8,13 +10,13 @@ export const userPaths = [
     element: <UserDashboard />,
   },
   {
-    name: 'Add Booking',
-    path: 'add-booking',
-    element: <BookingForm />,
+    name: 'My Bookings',
+    path: 'my-bookings',
+    element: <BookingHistory />,
   },
   {
-    name: 'Update Booking',
-    path: 'update-booking',
-    element: <BookingForm />,
+    name: 'Add Booking',
+    path: 'add-booking',
+    element: <BookingForm2 />,
   },
 ]

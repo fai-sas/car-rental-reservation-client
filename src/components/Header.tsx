@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '../redux/hooks'
 import { logout, selectCurrentUser } from '../redux/features/auth/authSlice'
 
@@ -22,7 +22,7 @@ const Header = () => {
       <div className='flex items-center justify-between max-w-6xl px-6 py-4 mx-auto'>
         {/* Logo and Company Name */}
         <div className='text-2xl font-bold text-white'>
-          <NavLink to='/'>Car Rental Reservation</NavLink>
+          <Link to='/'>Car Rental Reservation</Link>
         </div>
 
         {/* Menu Toggle Button (for small screens) */}
@@ -38,37 +38,31 @@ const Header = () => {
             isMenuOpen ? 'block' : 'hidden'
           } md:flex space-x-8 md:space-x-6 text-center md:items-center absolute md:static w-full md:w-auto left-0 top-16 md:top-auto bg-gray-900 md:bg-transparent py-4 md:py-0 transition-all ease-in-out duration-300 z-20`}
         >
-          <NavLink
+          {/* <NavLink
             to='/'
             className='block px-4 py-2 text-white md:inline-block hover:text-gray-300'
           >
             Home
-          </NavLink>
+          </NavLink> */}
           <NavLink
-            to='carListing'
+            to='/carListing'
             className='block px-4 py-2 text-white md:inline-block hover:text-gray-300'
           >
             Listing
           </NavLink>
           <NavLink
-            to='/'
+            to='/booking'
             className='block px-4 py-2 text-white md:inline-block hover:text-gray-300'
           >
             Booking
           </NavLink>
           <NavLink
-            to='about'
+            to='/about'
             className='block px-4 py-2 text-white md:inline-block hover:text-gray-300'
           >
             About Us
           </NavLink>
 
-          <NavLink
-            to='/'
-            className='block px-4 py-2 text-white md:inline-block hover:text-gray-300'
-          >
-            Contact
-          </NavLink>
           {user && (
             <NavLink
               to={`/${user?.role}/dashboard`}

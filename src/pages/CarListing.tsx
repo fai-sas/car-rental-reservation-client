@@ -20,6 +20,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import CarsCard from '../components/CarsCard'
 import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
+import Header from '../components/Header'
 
 const { Content, Sider } = Layout
 const { Option } = Select
@@ -103,92 +104,95 @@ const ProductPage = () => {
   }
 
   return (
-    <Layout>
-      <Sider
-        breakpoint='lg'
-        collapsedWidth='0'
-        onBreakpoint={(broken) => {}}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type)
-        }}
-      >
-        <div className='p-4'>
-          <Input
-            placeholder='Search products'
-            prefix={<SearchOutlined />}
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-
-          <Select
-            className='w-full my-4 '
-            placeholder='Filter by category'
-            value={category}
-            onChange={handleCategoryChange}
-          >
-            <Option value=''>All Categories</Option>
-            {carType.map((category) => (
-              <Option key={category} value={category}>
-                {category}
-              </Option>
-            ))}
-          </Select>
-
-          <div className='my-4'>
-            <span className='text-white '>Price Range:</span>
-            <Slider
-              range
-              max={maxPrice}
-              value={priceRange}
-              onChange={handlePriceChange}
-            />
-          </div>
-          <Select
-            className='w-full my-4 text-white'
-            placeholder='Sort by price'
-            value={sortOrder}
-            onChange={handleSortChange}
-          >
-            <Option value=''>Sort by Price</Option>
-            <Option value='priceAsc'>
-              <SortAscendingOutlined /> Price Ascending
-            </Option>
-            <Option value='priceDesc'>
-              <SortDescendingOutlined /> Price Descending
-            </Option>
-          </Select>
-          <Button
-            className='w-full'
-            type='default'
-            icon={<ClearOutlined />}
-            onClick={handleClearFilters}
-          >
-            Clear Filters
-          </Button>
-        </div>
-      </Sider>
+    <>
+      <Header />
       <Layout>
-        <Content>
-          <div className='p-8'>
-            <Pagination
-              current={currentPage}
-              pageSize={pageSize}
-              total={totalProducts}
-              onChange={handlePageChange}
+        <Sider
+          breakpoint='lg'
+          collapsedWidth='0'
+          onBreakpoint={(broken) => {}}
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type)
+          }}
+        >
+          <div className='p-4'>
+            <Input
+              placeholder='Search products'
+              prefix={<SearchOutlined />}
+              value={searchTerm}
+              onChange={(e) => handleSearch(e.target.value)}
             />
+
+            <Select
+              className='w-full my-4 '
+              placeholder='Filter by category'
+              value={category}
+              onChange={handleCategoryChange}
+            >
+              <Option value=''>All Categories</Option>
+              {carType.map((category) => (
+                <Option key={category} value={category}>
+                  {category}
+                </Option>
+              ))}
+            </Select>
+
+            <div className='my-4'>
+              <span className='text-white '>Price Range:</span>
+              <Slider
+                range
+                max={maxPrice}
+                value={priceRange}
+                onChange={handlePriceChange}
+              />
+            </div>
+            <Select
+              className='w-full my-4 text-white'
+              placeholder='Sort by price'
+              value={sortOrder}
+              onChange={handleSortChange}
+            >
+              <Option value=''>Sort by Price</Option>
+              <Option value='priceAsc'>
+                <SortAscendingOutlined /> Price Ascending
+              </Option>
+              <Option value='priceDesc'>
+                <SortDescendingOutlined /> Price Descending
+              </Option>
+            </Select>
+            <Button
+              className='w-full'
+              type='default'
+              icon={<ClearOutlined />}
+              onClick={handleClearFilters}
+            >
+              Clear Filters
+            </Button>
           </div>
-          <div className='grid grid-cols-1 gap-4 p-8 my-8 md:grid-cols-3 lg:grid-cols-4'>
-            {products.length > 0 ? (
-              products.map((car) => <CarsCard key={car._id} car={car} />)
-            ) : (
-              <h1 className='text-6xl font-bold text-red-800 '>
-                No Data Found...
-              </h1>
-            )}
-          </div>
-        </Content>
+        </Sider>
+        <Layout>
+          <Content>
+            <div className='p-8'>
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={totalProducts}
+                onChange={handlePageChange}
+              />
+            </div>
+            <div className='grid grid-cols-1 gap-4 p-8 my-8 md:grid-cols-3 lg:grid-cols-4'>
+              {products.length > 0 ? (
+                products.map((car) => <CarsCard key={car._id} car={car} />)
+              ) : (
+                <h1 className='text-6xl font-bold text-red-800 '>
+                  No Data Found...
+                </h1>
+              )}
+            </div>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   )
 }
 

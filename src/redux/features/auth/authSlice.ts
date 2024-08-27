@@ -5,6 +5,8 @@ export type TUser = {
   email: string
   name: string
   role: string
+  phone: string
+  address: string
   iat: number
   exp: number
 }
