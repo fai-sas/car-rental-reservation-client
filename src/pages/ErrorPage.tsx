@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 const ErrorPage = () => {
   return (
     <>
-      <div className='container flex flex-col items-center justify-center min-h-screen mx-auto md:flex-row'>
+      <div
+        data-aos='fade-up'
+        data-aos-duration='1000'
+        className='container flex flex-col items-center justify-center min-h-screen mx-auto md:flex-row'
+      >
         <img
           src='https://i.ibb.co/6497y9K/Location-search-re-ttoj.png'
           className='md:w-1/2'

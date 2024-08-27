@@ -23,7 +23,11 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className='py-16 bg-white'>
+    <section
+      data-aos='fade-up'
+      data-aos-duration='1000'
+      className='py-16 bg-white'
+    >
       <div className='max-w-6xl px-6 mx-auto text-center'>
         <h2 className='mb-12 text-4xl font-bold'>
           What Our Customers are Saying

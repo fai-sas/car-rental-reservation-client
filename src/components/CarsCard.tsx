@@ -5,8 +5,8 @@ const CarsCard = ({ car }) => {
 
   return (
     <div
-      // data-aos='fade-up'
-      // data-aos-duration='2000'
+      data-aos='fade-up'
+      data-aos-duration='1000'
       className='relative my-8 text-gray-700 bg-white shadow-md rounded-xl bg-clip-border'
     >
       <div className='rounded-md '>

@@ -85,8 +85,6 @@ const AllUsers = () => {
       title: 'Action',
       key: 'x',
       render: (item) => {
-        console.log(item)
-
         return (
           <Button
             disabled={item.isApproved}

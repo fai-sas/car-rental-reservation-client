@@ -1,6 +1,10 @@
 const Values = () => {
   return (
-    <section className='py-12 bg-white'>
+    <section
+      data-aos='fade-up'
+      data-aos-duration='1000'
+      className='py-12 bg-white'
+    >
       <div className='px-6 mx-auto max-w-7xl'>
         <h2 className='mb-8 text-4xl font-bold text-center'>
           Values & Commitment

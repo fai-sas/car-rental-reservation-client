@@ -15,6 +15,7 @@ import {
 } from '../redux/features/booking/bookingApi'
 import FormTimePicker from '../components/Form/FormTimePicker'
 import FormController from '../components/Form/FormController'
+import moment from 'moment'
 
 const ReturnCar = () => {
   const [params, setParams] = useState<TQueryParam[] | undefined>(undefined)
@@ -51,11 +52,13 @@ const ReturnCar = () => {
       title: 'Date',
       key: 'date',
       dataIndex: 'date',
+      render: (date) => moment(date).format('D MMMM  YYYY'),
     },
     {
       title: 'Start Time',
       key: 'startTime',
       dataIndex: 'startTime',
+      render: (startTime) => moment(startTime, 'HH:mm').format('hh:mm A'),
     },
     {
       title: 'Action',
@@ -123,7 +126,13 @@ const ReturnCarModal = ({ bookingInfo }) => {
 
   return (
     <>
-      <Button onClick={showModal}>Return Car</Button>
+      <Button
+        type='primary'
+        disabled={status === 'available'}
+        onClick={showModal}
+      >
+        Return Car
+      </Button>
       <Modal
         title='Return Car'
         open={isModalOpen}
@@ -133,9 +142,7 @@ const ReturnCarModal = ({ bookingInfo }) => {
       >
         <FormController onSubmit={handleSubmit}>
           <FormTimePicker name='endTime' label='End Time' />
-          <Button disabled={status === 'unavailable'} htmlType='submit'>
-            Return Car
-          </Button>
+          <Button htmlType='submit'>Return Car</Button>
         </FormController>
       </Modal>
     </>

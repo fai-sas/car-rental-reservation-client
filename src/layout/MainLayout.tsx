@@ -18,7 +18,7 @@ const MainLayout = () => {
     <Layout style={{ height: '100%' }}>
       <Sidebar />
       <Layout>
-        <Header className='flex items-center justify-between gap-4'>
+        <Header className='flex items-center justify-between gap-4 overflow-hidden'>
           <NavLink to='/'>
             <Button>Back Home</Button>
           </NavLink>

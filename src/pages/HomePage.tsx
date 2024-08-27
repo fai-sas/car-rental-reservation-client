@@ -8,14 +8,14 @@ import WhyChooseUs from '../components/HomePage/WhyChooseUs'
 
 const HomePage = () => {
   return (
-    <>
+    <div className='overflow-hidden'>
       <Header />
       <Hero />
       <FeaturedCars />
       <WhyChooseUs />
       <Testimonials />
       <Footer />
-    </>
+    </div>
   )
 }
 

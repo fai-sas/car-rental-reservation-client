@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .active {
   text-decoration: underline;
   font-weight: bold;

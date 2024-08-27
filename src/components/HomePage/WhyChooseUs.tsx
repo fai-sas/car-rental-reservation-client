@@ -23,7 +23,11 @@ const WhyChooseUs = () => {
   ]
 
   return (
-    <section className='py-16 bg-gray-50'>
+    <section
+      data-aos='fade-up'
+      data-aos-duration='1000'
+      className='py-16 bg-gray-50'
+    >
       <div className='max-w-6xl px-6 mx-auto text-center'>
         <h2 className='mb-12 text-4xl font-bold'>Why Choose Us?</h2>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>

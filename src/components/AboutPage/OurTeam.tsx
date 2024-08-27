@@ -2,28 +2,36 @@ const teamMembers = [
   {
     name: 'John Doe',
     role: 'Founder & CEO',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
   {
     name: 'Jane Smith',
     role: 'Chief Operating Officer',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
   {
     name: 'Michael Johnson',
     role: 'Head of Marketing',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
   {
     name: 'Emily Davis',
     role: 'Customer Support Manager',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/789822/pexels-photo-789822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
 ]
 
 const OurTeam = () => {
   return (
-    <section className='py-12 bg-white'>
+    <section
+      data-aos='fade-up'
+      data-aos-duration='1000'
+      className='py-12 bg-white'
+    >
       <div className='px-6 mx-auto max-w-7xl'>
         <h2 className='mb-12 text-4xl font-bold text-center'>Meet Our Team</h2>
         <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4'>

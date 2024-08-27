@@ -1,6 +1,10 @@
 const CompanyHistory = () => {
   return (
-    <section className='py-12 bg-gray-100'>
+    <section
+      data-aos='fade-up'
+      data-aos-duration='1000'
+      className='py-12 bg-gray-100'
+    >
       <div className='max-w-5xl px-6 mx-auto'>
         <h2 className='mb-8 text-4xl font-bold text-center'>Our History</h2>
         <div className='space-y-6'>

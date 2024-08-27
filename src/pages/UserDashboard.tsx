@@ -111,7 +111,11 @@ const UserDashboard = () => {
 }
 
 const Card = ({ title, value, icon, color }) => (
-  <div className='flex flex-col items-center p-6 bg-white rounded-lg shadow-md'>
+  <div
+    data-aos='fade-up'
+    data-aos-duration='1000'
+    className='flex flex-col items-center p-6 bg-white rounded-lg shadow-md'
+  >
     <svg
       className={`w-12 h-12 mb-4 ${color}`}
       fill='currentColor'

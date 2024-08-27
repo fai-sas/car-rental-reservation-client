@@ -1,6 +1,10 @@
 const Contact = () => {
   return (
-    <section className='py-16 bg-gray-50'>
+    <section
+      data-aos='fade-up'
+      data-aos-duration='1000'
+      className='py-16 bg-gray-50'
+    >
       <div className='px-6 mx-auto max-w-7xl'>
         <h2 className='mb-12 text-4xl font-extrabold text-center text-gray-900'>
           Get in Touch

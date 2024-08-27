@@ -16,7 +16,7 @@ const Hero = () => {
 
   return (
     <section className="relative w-full h-screen bg-cover bg-center bg-[url('https://images.pexels.com/photos/627678/pexels-photo-627678.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]">
-      <div className='absolute inset-0 flex flex-col items-center justify-center bg-black/50'>
+      <div className='absolute inset-0 flex flex-col items-center justify-center bg-black/50 '>
         <h1 className='mb-6 text-5xl font-bold text-center text-white'>
           Discover Your Perfect Ride
         </h1>
@@ -25,7 +25,11 @@ const Hero = () => {
             Book Now
           </button>
         </Link>
-        <div className='w-full max-w-2xl p-8 bg-white rounded-lg shadow-lg'>
+        <div
+          data-aos='fade-up'
+          data-aos-duration='2000'
+          className='w-full max-w-2xl p-8 bg-white rounded-lg shadow-lg'
+        >
           <FormController onSubmit={onSubmit}>
             <Row gutter={16}>
               <Col span={12}>

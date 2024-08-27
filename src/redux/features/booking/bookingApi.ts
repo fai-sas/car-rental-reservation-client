@@ -63,7 +63,7 @@ const carsApi = baseApi.injectEndpoints({
     }),
     makePayment: builder.mutation({
       query: (data) => ({
-        url: '/payment/confirmation',
+        url: '/payment/create-payment',
         method: 'POST',
         body: data,
       }),

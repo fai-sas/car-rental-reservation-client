@@ -115,7 +115,7 @@ const ProductPage = () => {
             console.log(collapsed, type)
           }}
         >
-          <div className='p-4'>
+          <div data-aos='fade-up' data-aos-duration='1000' className='p-4'>
             <Input
               placeholder='Search products'
               prefix={<SearchOutlined />}

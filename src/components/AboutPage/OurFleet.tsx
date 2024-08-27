@@ -2,29 +2,37 @@ const fleetData = [
   {
     category: 'Economy',
     description: 'Affordable and fuel-efficient cars for everyday travel.',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
   {
     category: 'Luxury',
     description: 'Premium vehicles offering top-of-the-line comfort and style.',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/210019/pexels-photo-210019.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
   {
     category: 'SUVs',
     description:
       'Spacious and powerful SUVs, perfect for family trips and off-road adventures.',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/1592261/pexels-photo-1592261.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
   {
     category: 'Electric',
     description: 'Eco-friendly electric vehicles with the latest technology.',
-    image: 'https://via.placeholder.com/150',
+    image:
+      'https://images.pexels.com/photos/11139552/pexels-photo-11139552.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
 ]
 
 const OurFleet = () => {
   return (
-    <section className='py-12 bg-gray-100'>
+    <section
+      data-aos='fade-up'
+      data-aos-duration='1000'
+      className='py-12 bg-gray-100'
+    >
       <div className='px-6 mx-auto max-w-7xl'>
         <h2 className='mb-12 text-4xl font-bold text-center'>Our Fleet</h2>
         <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4'>

@@ -48,7 +48,7 @@ const AddCar = () => {
   }
 
   return (
-    <div>
+    <div data-aos='fade-up' data-aos-duration='1000'>
       <h1 className='p-12 text-4xl font-bold '>Add Car</h1>
       <article>
         <Flex justify='center' align='center'>

@@ -10,6 +10,7 @@ import { useAppSelector } from '../redux/hooks'
 import { selectCurrentUser } from '../redux/features/auth/authSlice'
 import toast from 'react-hot-toast'
 import FormController from '../components/Form/FormController'
+import moment from 'moment'
 
 const BookingHistory = () => {
   const user = useAppSelector(selectCurrentUser)
@@ -38,18 +39,22 @@ const BookingHistory = () => {
         (booking) => booking._id === data._id
       )
       const paymentData = {
-        user: user?.name,
-        totalCost: selectedBooking?.totalCost,
+        user: {
+          name: user?.name,
+          phone: '01717123456',
+          email: user?.email,
+        },
+        totalPrice: selectedBooking?.totalCost,
       }
       console.log(paymentData)
 
-      // const res = await makePayment(paymentData).unwrap()
-      // if (res.success) {
-      //   console.log(res)
-      //   window.location.href = res?.data?.payment_url
-      // } else {
-      //   console.error('Order creation failed:', res?.message)
-      // }
+      const res = await makePayment(paymentData).unwrap()
+      if (res.success) {
+        console.log(res)
+        window.location.href = res?.data?.payment_url
+      } else {
+        console.error('Order creation failed:', res?.message)
+      }
     } catch (error) {
       console.log(error)
     }
@@ -71,21 +76,28 @@ const BookingHistory = () => {
       title: 'Booking Date',
       key: 'date',
       dataIndex: 'date',
+      render: (date) => moment(date).format('D MMMM  YYYY'),
     },
     {
       title: 'Start Time',
       key: 'startTime',
       dataIndex: 'startTime',
+      render: (startTime) => moment(startTime, 'HH:mm').format('hh:mm A'),
     },
     {
       title: 'End Time',
       key: 'endTime',
       dataIndex: 'endTime',
+      render: (endTime) => moment(endTime, 'HH:mm').format('hh:mm A'),
     },
     {
       title: 'Total Cost',
       key: 'totalCost',
       dataIndex: 'totalCost',
+      render: (totalCost) =>
+        `$${Intl.NumberFormat('en-US', { style: 'decimal' }).format(
+          totalCost
+        )}`,
     },
     {
       title: 'Action',

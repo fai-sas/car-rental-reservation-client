@@ -54,7 +54,7 @@ const BookingForm2 = () => {
 
   return (
     <>
-      <div>
+      <div data-aos='fade-up' data-aos-duration='1000'>
         <h1 className='p-12 text-4xl font-bold text-center'>Book Car</h1>
         <Flex justify='center' align='center'>
           <Col span={12}>

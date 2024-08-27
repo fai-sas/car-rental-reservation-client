@@ -52,7 +52,7 @@ const FeaturedCars = () => {
   return (
     <section
       data-aos='fade-up'
-      data-aos-duration='2000'
+      data-aos-duration='1000'
       className='container p-8 mx-auto mt-12'
     >
       <div className='flex flex-col items-start w-full max-w-xl px-4 mx-auto lg:px-8 lg:max-w-screen-xl'>

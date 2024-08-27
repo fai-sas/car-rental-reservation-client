@@ -33,7 +33,11 @@ const AdminDashboard = () => {
         Welcome {user?.name}
       </h2>
       {/*  */}
-      <section className='py-16 bg-gray-50'>
+      <section
+        data-aos='fade-up'
+        data-aos-duration='1000'
+        className='py-16 bg-gray-50'
+      >
         <div className='px-6 mx-auto max-w-7xl'>
           <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
             <div className='flex flex-col items-center p-8 text-center bg-white rounded-lg shadow-md'>

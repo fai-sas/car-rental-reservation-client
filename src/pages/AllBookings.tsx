@@ -12,6 +12,7 @@ import {
   useGetAllBookingsQuery,
   useUpdateBookingMutation,
 } from '../redux/features/booking/bookingApi'
+import moment from 'moment'
 
 const AllBookings = () => {
   const [params, setParams] = useState<TQueryParam[] | undefined>(undefined)
@@ -84,18 +85,18 @@ const AllBookings = () => {
       title: 'Date',
       key: 'date',
       dataIndex: 'date',
+      render: (date) => moment(date).format('D MMMM  YYYY'),
     },
     {
       title: 'Start Time',
       key: 'startTime',
       dataIndex: 'startTime',
+      render: (startTime) => moment(startTime, 'HH:mm').format('hh:mm A'),
     },
     {
       title: 'Action',
       key: 'x',
       render: (item) => {
-        console.log(item)
-
         return (
           <Button
             disabled={item.isApproved}
@@ -157,6 +158,8 @@ const AllBookings = () => {
 
   return (
     <Table
+      data-aos='fade-up'
+      data-aos-duration='1000'
       loading={isFetching}
       columns={columns}
       dataSource={tableData}

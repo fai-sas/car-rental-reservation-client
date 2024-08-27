@@ -50,7 +50,8 @@ const Footer = () => {
         </div>
         <div className='pt-4 mt-6 text-center border-t border-gray-700'>
           <p>
-            &copy; {new Date().getFullYear()} Your Company. All rights reserved.
+            &copy; {new Date().getFullYear()} Car Rental Reservation. All rights
+            reserved.
           </p>
         </div>
       </div>
