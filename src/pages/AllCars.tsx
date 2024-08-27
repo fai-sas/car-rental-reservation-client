@@ -1,12 +1,28 @@
-import { Button, Modal, Table } from 'antd'
-import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
-import AddCar from '../components/AddCar'
+import { Button, Table, TableProps } from 'antd'
+import {
+  useDeleteCarMutation,
+  useGetAllCarsQuery,
+} from '../redux/features/cars/carsApi'
 import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { useState } from 'react'
+import { TQueryParam } from '../types'
 
 const AllCars = () => {
-  // const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
+  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined)
+
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
 
   const { data: cars, isFetching } = useGetAllCarsQuery(undefined)
+  const [deleteCar] = useDeleteCarMutation()
+
+  const handleDelete = (carId: string) => {
+    if (carId) {
+      deleteCar(carId)
+    }
+    setConfirmDelete(null)
+    toast.error('Car Deleted!')
+  }
 
   const tableData = cars?.data?.map(({ _id, name, model, status }) => ({
     key: _id,
@@ -35,15 +51,11 @@ const AllCars = () => {
       title: 'Action',
       key: 'x',
       render: (item) => {
-        console.log(item)
-
         return (
           <Link to={`/admin/edit-car/${item.key}`}>
-            <Button>Edit Car</Button>
+            <Button type='primary'>Edit Car</Button>
           </Link>
         )
-        // return <AddFacultyModal facultyInfo={item} />
-        // return <AddCar />
       },
     },
     {
@@ -51,90 +63,58 @@ const AllCars = () => {
       key: 'x',
       render: (item) => {
         console.log(item)
-
         return (
-          <Link to={`/admin/edit-car/${item.key}`}>
-            <Button>Delete Car</Button>
-          </Link>
+          <>
+            <Button
+              type='primary'
+              danger
+              onClick={() => handleDelete(item.key)}
+            >
+              Delete Car
+            </Button>
+            {confirmDelete === item.key && (
+              <div className='absolute p-4 bg-white rounded shadow-lg'>
+                <p>Are you sure you want to delete this product?</p>
+                <button
+                  className='px-2 py-1 mr-2 text-white bg-green-500 rounded'
+                  onClick={() => handleDelete(item.key)}
+                >
+                  Yes
+                </button>
+                <button
+                  className='px-2 py-1 text-white bg-gray-500 rounded'
+                  onClick={() => setConfirmDelete(null)}
+                >
+                  No
+                </button>
+              </div>
+            )}
+          </>
         )
-        // return <AddFacultyModal facultyInfo={item} />
-        // return <AddCar />
       },
     },
   ]
 
-  // const onChange: TableProps<TTableData>['onChange'] = (
-  //   _pagination,
-  //   filters,
-  //   _sorter,
-  //   extra
-  // ) => {
-  //   if (extra.action === 'filter') {
-  //     const queryParams: TQueryParam[] = [];
-  //     setParams(queryParams);
-  //   }
-  // };
+  const onChange: TableProps<TTableData>['onChange'] = (
+    _pagination,
+    filters,
+    _sorter,
+    extra
+  ) => {
+    if (extra.action === 'filter') {
+      const queryParams: TQueryParam[] = []
+      setParams(queryParams)
+    }
+  }
 
   return (
     <Table
       loading={isFetching}
       columns={columns}
       dataSource={tableData}
-      // onChange={onChange}
+      onChange={onChange}
     />
   )
 }
-
-// const AddFacultyModal = ({ facultyInfo }) => {
-//   const [isModalOpen, setIsModalOpen] = useState(false)
-//   const { data: facultiesData } = useGetAllFacultiesQuery(undefined)
-//   const [addFaculties] = useAddFacultiesMutation()
-
-//   const facultiesOption = facultiesData?.data?.map((item) => ({
-//     value: item._id,
-//     label: item.fullName,
-//   }))
-
-//   const handleSubmit = (data) => {
-//     const facultyData = {
-//       courseId: facultyInfo.key,
-//       data,
-//     }
-
-//     console.log(facultyData)
-
-//     addFaculties(facultyData)
-//   }
-
-//   const showModal = () => {
-//     setIsModalOpen(true)
-//   }
-
-//   const handleCancel = () => {
-//     setIsModalOpen(false)
-//   }
-
-//   return (
-//     <>
-//       <Button onClick={showModal}>Add Faculty</Button>
-//       <Modal
-//         title='Basic Modal'
-//         open={isModalOpen}
-//         onCancel={handleCancel}
-//         footer={null}
-//       >
-//         <PHForm onSubmit={handleSubmit}>
-//           <PHSelect
-//             mode='multiple'
-//             options={facultiesOption}
-//             name='faculties'
-//             label='Faculty'
-//           />
-//           <Button htmlType='submit'>Submit</Button>
-//         </PHForm>
-//       </Modal>
-//     </>
-//   )
-// }
 
 export default AllCars
