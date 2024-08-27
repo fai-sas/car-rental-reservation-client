@@ -3,6 +3,7 @@ import EditCar from '../components/EditCar'
 import AdminDashboard from '../pages/AdminDashboard'
 import AllBookings from '../pages/AllBookings'
 import AllCars from '../pages/AllCars'
+import AllUsers from '../pages/AllUsers'
 
 export const adminPaths = [
   {
@@ -33,7 +34,7 @@ export const adminPaths = [
     name: 'Booking Management',
     children: [
       {
-        name: 'Get All Bookings',
+        name: 'All Bookings',
         path: 'all-bookings',
         element: <AllBookings />,
       },
@@ -48,14 +49,9 @@ export const adminPaths = [
     name: 'User Management',
     children: [
       {
-        name: 'Create User',
-        path: 'add-user',
-        element: <AddCar />,
-      },
-      {
-        name: 'Get All Users',
-        path: 'users',
-        element: <AddCar />,
+        name: 'All Users',
+        path: 'all-users',
+        element: <AllUsers />,
       },
       {
         path: 'user/:userId',
