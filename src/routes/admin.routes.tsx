@@ -1,6 +1,7 @@
 import AddCar from '../components/AddCar'
 import EditCar from '../components/EditCar'
 import AdminDashboard from '../pages/AdminDashboard'
+import AllCars from '../pages/AllCars'
 
 export const adminPaths = [
   {
@@ -12,22 +13,17 @@ export const adminPaths = [
     name: 'Car Management',
     children: [
       {
+        name: 'All Cars',
+        path: 'cars',
+        element: <AllCars />,
+      },
+      {
         name: 'Add Car',
         path: 'add-car',
         element: <AddCar />,
       },
       {
-        name: 'Get All Cars',
-        path: 'cars',
-        element: <AddCar />,
-      },
-      {
-        path: 'cars/:carId',
-        element: <AddCar />,
-      },
-      {
-        name: 'Edit Car',
-        path: 'edit-car',
+        path: 'edit-car/:carId',
         element: <EditCar />,
       },
     ],

@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <AboutPage />,
   },
   {
-    path: '/cars',
+    path: '/carListing',
     element: <CarListing />,
   },
   {
