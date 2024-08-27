@@ -41,10 +41,9 @@ const carsApi = baseApi.injectEndpoints({
       invalidatesTags: ['bookings'],
     }),
     updateBooking: builder.mutation({
-      query: ({ id, data }) => ({
+      query: (id) => ({
         url: `/bookings/${id}`,
         method: 'PUT',
-        body: data,
       }),
       invalidatesTags: ['bookings'],
     }),

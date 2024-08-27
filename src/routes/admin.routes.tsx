@@ -1,6 +1,7 @@
 import AddCar from '../components/AddCar'
 import EditCar from '../components/EditCar'
 import AdminDashboard from '../pages/AdminDashboard'
+import AllBookings from '../pages/AllBookings'
 import AllCars from '../pages/AllCars'
 
 export const adminPaths = [
@@ -33,8 +34,8 @@ export const adminPaths = [
     children: [
       {
         name: 'Get All Bookings',
-        path: 'bookings',
-        element: <AddCar />,
+        path: 'all-bookings',
+        element: <AllBookings />,
       },
       {
         name: 'Edit Booking',
