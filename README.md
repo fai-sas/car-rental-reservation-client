@@ -1,50 +1,77 @@
-# React + TypeScript + Vite
+## Car Rental Reservation Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Car Rental Reservation is a powerful and modern web application designed to streamline car booking processes. This client-side application provides a seamless shopping experience with features like car browsing, booking management, and secure checkout.
 
-Currently, two official plugins are available:
+## Project Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Car Rental Reservation project is a car booking application built with React, Typescript, Redux, and Tailwind CSS. It aims to provide a robust and user-friendly platform for online shopping. The application integrates various functionalities such as user authentication, product management, and payment processing to ensure a comprehensive shopping experience.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- User authentication and authorization
+- Admin and User Dashboard
+- Car browsing and searching
+- Booking management
+- Secure checkout process
+- Responsive design for mobile and desktop views
 
-- Configure the top-level `parserOptions` property like this:
+## Technology Stack
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- React
+- Redux Toolkit
+- Ant Design (Antd)
+- React Hook Form
+- React Hot Toast
+- React Router DOM
+- Tailwind CSS
+- Vite
+- TypeScript
+
+## Installation Guideline
+
+### Prerequisites
+
+- Node.js (version 14.x or higher)
+- npm (version 6.x or higher)
+
+### Installation Steps
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/fai-sas/car-rental-reservation-client
+   cd car-rental-reservation
+   ```
+
+### Install dependencies:
+
+```bash
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Create a .env file in the root directory:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+touch .env
 ```
+
+### Add necessary configuration variables in the .env file:
+
+```bash
+VITE_BASE_URL=http://your-api-url
+```
+
+### Start the development server:
+
+```bash
+npm run dev
+```
+
+### Build for production:
+
+```bash
+npm run build
+```
+
+### Usage
+
+After setting up the project, you can access the application locally by navigating to `http:/localhost:5137`(or the port specified in your .env file). Use the application to browse products, manage your cart, and proceed through the checkout process with your preferred payment method.
