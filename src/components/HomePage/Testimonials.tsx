@@ -25,7 +25,9 @@ const Testimonials = () => {
   return (
     <section className='py-16 bg-white'>
       <div className='max-w-6xl px-6 mx-auto text-center'>
-        <h2 className='mb-12 text-4xl font-bold'>Customer Testimonials</h2>
+        <h2 className='mb-12 text-4xl font-bold'>
+          What Our Customers are Saying
+        </h2>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           {testimonials.map((testimonial, index) => (
             <div

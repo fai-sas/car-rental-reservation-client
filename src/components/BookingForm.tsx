@@ -8,23 +8,20 @@ import FormInput from './Form/FormInput'
 import toast from 'react-hot-toast'
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 import { TResponse } from '../types'
-import {
-  useCreateBookingMutation,
-  useGetAllBookingsQuery,
-} from '../redux/features/booking/bookingApi'
+import { useCreateBookingMutation } from '../redux/features/booking/bookingApi'
 import FormTimePicker from './Form/FormTimePicker'
 import FormDatePicker from './Form/FormDatePicker'
 import FormSelect from './Form/FormSelect'
-import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
+import { useParams } from 'react-router-dom'
 
 const BookingForm = () => {
-  const [createBooking] = useCreateBookingMutation()
-  const { data: cars, isLoading } = useGetAllCarsQuery(undefined)
+  const { carId } = useParams()
 
-  const carOptions = cars?.data?.map((item) => ({
-    value: item._id,
-    label: item.name,
-  }))
+  const defaultValue = {
+    car: carId,
+  }
+
+  const [createBooking] = useCreateBookingMutation()
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const bookingData = {
@@ -55,8 +52,9 @@ const BookingForm = () => {
       <h1 className='p-12 text-4xl font-bold '> Booking Form</h1>
       <Flex justify='center' align='center'>
         <Col span={12}>
-          <FormController onSubmit={onSubmit}>
-            <FormSelect options={carOptions} name='car' label='Car' />
+          <FormController onSubmit={onSubmit} defaultValues={defaultValue}>
+            <FormInput type='text' name='car' label='car' />
+
             <Row>
               <FormDatePicker name='date' label='Date' />
             </Row>

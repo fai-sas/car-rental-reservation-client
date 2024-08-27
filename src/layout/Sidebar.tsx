@@ -7,6 +7,7 @@ import { sidebarItemsGenerator } from '../utils/sidebarItemsGenerator'
 import { adminPaths } from '../routes/admin.routes'
 import { TUser, useCurrentToken } from '../redux/features/auth/authSlice'
 import { userPaths } from '../routes/user.routes'
+import { NavLink } from 'react-router-dom'
 
 const { Sider } = Layout
 
@@ -53,7 +54,9 @@ const Sidebar = () => {
           alignItems: 'center',
         }}
       >
-        <h1>Car Rental Service</h1>
+        <NavLink to='/' target='_blank'>
+          <h1 className='font-bold '>Car Rental Service</h1>
+        </NavLink>
       </div>
       <Menu
         theme='dark'

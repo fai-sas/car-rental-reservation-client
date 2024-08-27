@@ -248,7 +248,7 @@ const CarDetailsPage = () => {
                 </Tag>
               ))}
             </div>
-            <Link to='/booking'>
+            <Link to={`/booking/${carId}`}>
               <Button type='primary' size='large' className='w-full mt-6'>
                 Book Now
               </Button>
