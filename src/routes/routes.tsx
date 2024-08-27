@@ -9,6 +9,8 @@ import { userPaths } from './user.routes'
 import ProtectedRoute from '../layout/ProtectedRoute'
 import AboutPage from '../pages/AboutPage'
 import CarDetailsPage from '../pages/CarDetailsPage'
+import CarListing from '../pages/CarListing'
+import BookingPage from '../pages/BookingPage'
 
 const router = createBrowserRouter([
   {
@@ -20,8 +22,16 @@ const router = createBrowserRouter([
     element: <AboutPage />,
   },
   {
+    path: '/cars',
+    element: <CarListing />,
+  },
+  {
     path: '/car/:carId',
     element: <CarDetailsPage />,
+  },
+  {
+    path: '/booking',
+    element: <BookingPage />,
   },
   {
     path: '/admin',
