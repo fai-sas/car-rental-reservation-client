@@ -30,7 +30,7 @@ const AllBookings = () => {
         await updateBooking(bookingId)
       }
       setConfirmDelete(null)
-      toast.success('Booking Approved!')
+      toast.success('Booking Approval Updated!')
     } catch (error) {
       console.log(error)
 
@@ -63,8 +63,6 @@ const AllBookings = () => {
     })
   )
 
-  console.log(tableData)
-
   const columns = [
     {
       title: 'Customer',
@@ -73,13 +71,14 @@ const AllBookings = () => {
     },
     {
       title: 'Car',
-      key: 'isApproved',
-      dataIndex: 'isApproved',
+      key: 'car',
+      dataIndex: 'car',
     },
     {
       title: 'Approved',
-      key: 'car',
-      dataIndex: 'car',
+      key: 'isApproved',
+      dataIndex: 'isApproved',
+      render: (isApproved) => (isApproved ? 'Approved' : 'Pending'),
     },
     {
       title: 'Date',
@@ -99,11 +98,11 @@ const AllBookings = () => {
       render: (item) => {
         return (
           <Button
-            disabled={item.isApproved}
-            type='primary'
+            // type='primary'
+            type={item?.isApproved ? 'primary' : 'default dashed'}
             onClick={() => handleUpdate(item.key)}
           >
-            Approve Booking
+            {item?.isApproved ? 'UnApprove Booking' : 'Approve Booking'}
           </Button>
         )
       },
@@ -158,8 +157,6 @@ const AllBookings = () => {
 
   return (
     <Table
-      data-aos='fade-up'
-      data-aos-duration='1000'
       loading={isFetching}
       columns={columns}
       dataSource={tableData}

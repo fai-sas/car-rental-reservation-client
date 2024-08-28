@@ -52,68 +52,110 @@ const AddCar = () => {
       <h1 className='p-12 text-4xl font-bold '>Add Car</h1>
       <article>
         <Flex justify='center' align='center'>
-          <Col span={6}>
+          <Col span={12}>
             <FormController
               onSubmit={onSubmit}
               resolver={zodResolver(addCarValidationSchema)}
             >
-              <Row>
-                <FormInput type='text' name='name' label='Name' />
-                <FormInput type='text' name='description' label='Description' />
+              <Row gutter={16}>
+                <Col xs={24} lg={12}>
+                  <FormInput type='text' name='name' label='Name' />
+                </Col>
+                <Col xs={24} lg={12}>
+                  <FormInput
+                    type='text'
+                    name='description'
+                    label='Description'
+                  />
+                </Col>
               </Row>
 
-              <Row>
-                <FormInput type='text' name='color' label='Color' />
-                <FormInput type='text' name='image' label='Image' />
+              <Row gutter={16}>
+                <Col xs={24} lg={12}>
+                  <FormInput type='text' name='color' label='Color' />
+                </Col>
+                <Col xs={24} lg={12}>
+                  <FormInput type='text' name='image' label='Image' />
+                </Col>
               </Row>
-              <Row>
-                <FormInput type='text' name='model' label='Model' />
-                <FormInput
-                  type='number'
-                  name='pricePerHour'
-                  label='Price Per Hour'
-                />
+
+              <Row gutter={16}>
+                <Col xs={24} lg={12}>
+                  <FormInput type='text' name='model' label='Model' />
+                </Col>
+                <Col xs={24} lg={12}>
+                  <FormInput
+                    type='number'
+                    name='pricePerHour'
+                    label='Price Per Hour'
+                  />
+                </Col>
               </Row>
-              <Row>
-                <FormInput type='number' name='year' label='Year' />
-                <FormInput type='number' name='seats' label='Seats' />
+
+              <Row gutter={16}>
+                <Col xs={24} lg={12}>
+                  <FormInput type='number' name='year' label='Year' />
+                </Col>
+                <Col xs={24} lg={12}>
+                  <FormInput type='number' name='seats' label='Seats' />
+                </Col>
               </Row>
-              <FormSelect
-                options={statusOptions}
-                name='status'
-                label='Status'
-              />
-              <FormSelect
-                options={carTypeOptions}
-                name='carType'
-                label='Car Type'
-              />
-              <Row>
-                <FormSelect
-                  options={fuelOptions}
-                  name='fuelType'
-                  label='Fuel Type'
-                />
-                <FormSelect
-                  options={transmissionOptions}
-                  name='transmission'
-                  label='Transmission'
-                />
+
+              <Row gutter={16}>
+                <Col xs={24} lg={12}>
+                  <FormSelect
+                    options={statusOptions}
+                    name='status'
+                    label='Status'
+                  />
+                </Col>
+                <Col xs={24} lg={12}>
+                  <FormSelect
+                    options={carTypeOptions}
+                    name='carType'
+                    label='Car Type'
+                  />
+                </Col>
               </Row>
-              <Row>
-                <FormSelect
-                  options={locationOptions}
-                  name='location'
-                  label='Location'
-                />
-                <FormSelect
-                  mode='multiple'
-                  options={featuresOptions}
-                  name='features'
-                  label='Features'
-                />
+
+              <Row gutter={16}>
+                <Col xs={24} lg={12}>
+                  <FormSelect
+                    options={fuelOptions}
+                    name='fuelType'
+                    label='Fuel Type'
+                  />
+                </Col>
+                <Col xs={24} lg={12}>
+                  <FormSelect
+                    options={transmissionOptions}
+                    name='transmission'
+                    label='Transmission'
+                  />
+                </Col>
               </Row>
-              <Button htmlType='submit'>Submit</Button>
+
+              <Row gutter={16}>
+                <Col xs={24} lg={12}>
+                  <FormSelect
+                    options={locationOptions}
+                    name='location'
+                    label='Location'
+                  />
+                </Col>
+                <Col xs={24} lg={12}>
+                  <FormSelect
+                    mode='multiple'
+                    options={featuresOptions}
+                    name='features'
+                    label='Features'
+                  />
+                </Col>
+              </Row>
+
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
             </FormController>
           </Col>
         </Flex>

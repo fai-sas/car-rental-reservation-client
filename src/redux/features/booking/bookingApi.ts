@@ -49,8 +49,16 @@ const carsApi = baseApi.injectEndpoints({
     }),
     updateBooking: builder.mutation({
       query: (id) => ({
-        url: `/bookings/${id}`,
+        url: `/bookings/approve/${id}`,
         method: 'PUT',
+      }),
+      invalidatesTags: ['bookings'],
+    }),
+    modifyBooking: builder.mutation({
+      query: ({ id, payload }) => ({
+        url: `/bookings/modify/${id}`,
+        method: 'PUT',
+        body: payload,
       }),
       invalidatesTags: ['bookings'],
     }),
@@ -79,5 +87,6 @@ export const {
   useUpdateBookingMutation,
   useDeleteBookingMutation,
   useGetMyBookingQuery,
+  useModifyBookingMutation,
   useMakePaymentMutation,
 } = carsApi

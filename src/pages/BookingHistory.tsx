@@ -11,6 +11,7 @@ import { selectCurrentUser } from '../redux/features/auth/authSlice'
 import toast from 'react-hot-toast'
 import FormController from '../components/Form/FormController'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 const BookingHistory = () => {
   const user = useAppSelector(selectCurrentUser)
@@ -18,7 +19,6 @@ const BookingHistory = () => {
   const [params, setParams] = useState<TQueryParam[] | undefined>(undefined)
 
   const { data: bookings, isFetching } = useGetMyBookingQuery(undefined)
-  console.log(bookings)
 
   const tableData = bookings?.data?.map(
     ({ _id, user, car, date, startTime, endTime, totalCost, isApproved }) => ({
@@ -111,6 +111,17 @@ const BookingHistory = () => {
           >
             Pay Now
           </Button>
+        )
+      },
+    },
+    {
+      title: 'Action',
+      key: 'x',
+      render: (item) => {
+        return (
+          <Link to={`/user/edit-booking/${item?.key}`}>
+            <Button disabled={item?.isApproved}>Edit Booking</Button>
+          </Link>
         )
       },
     },

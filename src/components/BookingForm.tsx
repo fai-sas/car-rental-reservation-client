@@ -18,26 +18,22 @@ import Header from './Header'
 import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
 
 const BookingForm = () => {
-  const { id } = useParams() // Get carId from URL params
-  const { data } = useGetAllCarsQuery(undefined) // Fetch all cars data
+  const { id } = useParams()
+  const { data } = useGetAllCarsQuery(undefined)
 
-  // Create options for FormSelect with car names as labels and IDs as values
   const carOptions = data?.data?.map((car) => ({
     label: car.name,
     value: car._id,
   }))
 
-  // Find the car option that matches the carId from the URL
   const selectedCar = carOptions?.find((car) => car.value === id)
 
-  // Default values for the form
   const defaultValue = {
-    car: selectedCar ? selectedCar.value : '', // Use car ObjectId if found, else empty
+    car: selectedCar ? selectedCar.value : '',
   }
 
   const [createBooking] = useCreateBookingMutation()
 
-  // Form submit handler
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const bookingData = {
       ...data,
