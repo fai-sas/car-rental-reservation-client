@@ -31,23 +31,29 @@ const OurFleet = () => {
     <section
       data-aos='fade-up'
       data-aos-duration='1000'
-      className='py-12 bg-gray-100'
+      className='py-12 bg-gray-100 dark:bg-gray-900'
     >
       <div className='px-6 mx-auto max-w-7xl'>
-        <h2 className='mb-12 text-4xl font-bold text-center'>Our Fleet</h2>
+        <h2 className='mb-12 text-4xl font-bold text-center text-gray-900 dark:text-white'>
+          Our Fleet
+        </h2>
         <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4'>
           {fleetData.map((car, index) => (
             <div
               key={index}
-              className='p-6 text-center bg-white rounded-lg shadow-lg'
+              className='p-6 text-center bg-white rounded-lg shadow-lg dark:bg-gray-800'
             >
               <img
                 src={car.image}
                 alt={car.category}
                 className='object-cover w-32 h-32 mx-auto mb-4 rounded-lg'
               />
-              <h3 className='mb-2 text-2xl font-semibold'>{car.category}</h3>
-              <p className='text-gray-600'>{car.description}</p>
+              <h3 className='mb-2 text-2xl font-semibold text-gray-900 dark:text-white'>
+                {car.category}
+              </h3>
+              <p className='text-gray-600 dark:text-gray-300'>
+                {car.description}
+              </p>
             </div>
           ))}
         </div>

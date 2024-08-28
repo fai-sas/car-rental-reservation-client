@@ -38,11 +38,10 @@ const carsSlice = createSlice({
     clearFilters: (state) => {
       state.searchTerm = ''
       state.category = ''
-      state.priceRange = [0, state.maxPrice]
+      state.priceRange = [0, state.maxPrice] // Reset price range
       state.sortOrder = ''
       state.currentPage = 1
       state.pageSize = 9
-      state.maxPrice = 1000
     },
   },
 })

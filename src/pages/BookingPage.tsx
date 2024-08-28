@@ -1,23 +1,20 @@
-import { useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   SearchOutlined,
   SortAscendingOutlined,
   SortDescendingOutlined,
   ClearOutlined,
 } from '@ant-design/icons'
-import { Layout, Input, Button, Select, Slider, Pagination } from 'antd'
-import Loader from '../components/Loader'
 import {
-  setSearchTerm,
-  setCategory,
-  setPriceRange,
-  setSortOrder,
-  setCurrentPage,
-  setPageSize,
-  setMaxPrice,
-  clearFilters,
-} from '../redux/features/cars/carsSlice'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
+  Layout,
+  Input,
+  Button,
+  Select,
+  Slider,
+  Pagination,
+  Checkbox,
+} from 'antd'
+import Loader from '../components/Loader'
 import CarsCard from '../components/CarsCard'
 import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
 import Header from '../components/Header'
@@ -26,78 +23,71 @@ const { Content, Sider } = Layout
 const { Option } = Select
 
 const BookingPage = () => {
-  const dispatch = useAppDispatch()
-  const {
-    searchTerm,
-    category,
-    priceRange,
-    sortOrder,
-    currentPage,
-    pageSize,
-    maxPrice,
-  } = useAppSelector((state) => state.cars)
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([])
+  const [selectedCarTypes, setSelectedCarTypes] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200])
+  const [sortOrder, setSortOrder] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(10)
 
-  // Ensure the correct format for parameters
-  const formattedParams = {
-    searchTerm: searchTerm || '', // Ensure empty string if undefined
-    category: category || '',
-    priceRange: priceRange.length ? priceRange.join(',') : '', // Convert to string if array
-    sort: sortOrder || '',
-    page: currentPage || 1,
-    limit: pageSize || 10,
+  const queryParams = {
+    ...(searchTerm ? { searchTerm } : {}),
+    ...(selectedLocations.length > 0 ? { location: selectedLocations } : {}),
+    ...(selectedCarTypes.length > 0 ? { carType: selectedCarTypes } : {}),
+    ...(priceRange && (priceRange[0] !== 0 || priceRange[1] !== 200)
+      ? { priceRange }
+      : {}),
+    ...(sortOrder ? { sort: sortOrder } : {}),
+    page: currentPage,
+    limit: pageSize,
   }
 
-  // Log the formatted parameters
-  console.log('Formatted Params:', formattedParams)
-
-  const { data, isLoading, isError } = useGetAllCarsQuery(formattedParams)
-
-  // Debug: Check the data response
-  console.log('API Response Data:', data)
+  const { data, isLoading, isError } = useGetAllCarsQuery(queryParams)
 
   const products = data?.data || []
-
-  useEffect(() => {
-    if (products.length > 0) {
-      const maxPriceFromData = Math.max(
-        ...products.map((product) => product.price)
-      )
-      dispatch(setMaxPrice(maxPriceFromData))
-    }
-  }, [dispatch, products])
-
-  const carType = [...new Set(products.map((car) => car.carType))]
-
   const totalProducts = data?.meta?.total || 0
 
-  const handleSearch = (value) => {
-    dispatch(setSearchTerm(value))
+  const availableCars = products?.filter((car) => car?.status === 'available')
+
+  const uniqueLocations = [
+    ...new Set(availableCars?.map((car) => car?.location)),
+  ]
+  const uniqueCarTypes = [...new Set(availableCars?.map((car) => car?.carType))]
+
+  const handleSearch = (value: string) => setSearchTerm(value)
+
+  const handleLocationChange = (checkedValues: string[]) => {
+    setSelectedLocations(checkedValues)
   }
 
-  const handleCategoryChange = (value) => {
-    dispatch(setCategory(value))
+  const handleCarTypeChange = (checkedValues: string[]) => {
+    setSelectedCarTypes(checkedValues)
   }
 
-  const handlePriceChange = (value) => {
-    dispatch(setPriceRange(value))
+  const handlePriceChange = (value: [number, number]) => {
+    setPriceRange(value)
   }
 
-  const handleSortChange = (value) => {
-    dispatch(setSortOrder(value))
+  const handleSortChange = (value: string) => {
+    setSortOrder(value)
   }
 
   const handleClearFilters = () => {
-    dispatch(clearFilters())
+    setSearchTerm('')
+    setSelectedLocations([])
+    setSelectedCarTypes([])
+    setPriceRange([0, 200])
+    setSortOrder('')
+    setCurrentPage(1)
   }
 
-  const handlePageChange = (page, pageSize) => {
-    dispatch(setCurrentPage(page))
-    dispatch(setPageSize(pageSize))
+  const handlePageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page)
+    setPageSize(pageSize)
   }
 
-  if (isLoading) {
-    return <Loader />
-  }
+  if (isLoading) return <Loader />
 
   if (!isLoading && isError) {
     return <h1 className='text-6xl font-bold text-red-800 '>Error...</h1>
@@ -111,9 +101,7 @@ const BookingPage = () => {
           breakpoint='lg'
           collapsedWidth='0'
           onBreakpoint={(broken) => {}}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type)
-          }}
+          onCollapse={(collapsed, type) => {}}
         >
           <div className='p-4'>
             <Input
@@ -123,31 +111,47 @@ const BookingPage = () => {
               onChange={(e) => handleSearch(e.target.value)}
             />
 
-            <Select
-              className='w-full my-4 '
-              placeholder='Filter by category'
-              value={category}
-              onChange={handleCategoryChange}
-            >
-              <Option value=''>All Categories</Option>
-              {carType.map((category) => (
-                <Option key={category} value={category}>
-                  {category}
-                </Option>
-              ))}
-            </Select>
+            {/* Location Filter */}
+            <div className='my-4'>
+              <h4 className='py-2 font-bold text-white'>Filter by Location:</h4>
+              <Checkbox.Group
+                className='checkbox-group'
+                options={uniqueLocations?.map((loc) => ({
+                  label: <span style={{ color: 'white' }}>{loc}</span>, // Set label text color to white
+                  value: loc,
+                }))}
+                value={selectedLocations}
+                onChange={handleLocationChange}
+              />
+            </div>
+
+            {/* Car Type Filter */}
+            <div className='my-4'>
+              <h4 className='py-2 font-bold text-white'>Filter by Car Type:</h4>
+              <Checkbox.Group
+                options={uniqueCarTypes.map((type) => ({
+                  label: <span style={{ color: 'white' }}>{type}</span>,
+                  value: type,
+                }))}
+                value={selectedCarTypes}
+                onChange={handleCarTypeChange}
+              />
+            </div>
 
             <div className='my-4'>
-              <span className='text-white '>Price Range:</span>
+              <span className='py-2 font-bold text-white'>
+                Price Per Hour Range:
+              </span>
               <Slider
                 range
-                max={maxPrice}
+                max={200}
                 value={priceRange}
                 onChange={handlePriceChange}
               />
             </div>
+
             <Select
-              className='w-full my-4 text-white'
+              className='w-full my-4'
               placeholder='Sort by price'
               value={sortOrder}
               onChange={handleSortChange}
@@ -160,6 +164,7 @@ const BookingPage = () => {
                 <SortDescendingOutlined /> Price Descending
               </Option>
             </Select>
+
             <Button
               className='w-full'
               type='default'
@@ -170,22 +175,29 @@ const BookingPage = () => {
             </Button>
           </div>
         </Sider>
+
         <Layout>
-          <Content>
+          <Content className='dark:bg-gray-900'>
             <div className='p-8'>
               <Pagination
+                className='text-white dark:bg-gray-900'
                 current={currentPage}
                 pageSize={pageSize}
                 total={totalProducts}
                 onChange={handlePageChange}
               />
             </div>
-            <div className='grid grid-cols-1 gap-4 p-8 my-8 md:grid-cols-3 lg:grid-cols-4'>
-              {products.length > 0 ? (
-                products.map((car) => <CarsCard key={car._id} car={car} />)
+            <h1 className='text-2xl font-bold text-center dark:text-gray-200'>
+              Available Cars
+            </h1>
+            <div className='grid grid-cols-1 gap-4 p-8 my-8 bg-white md:grid-cols-3 lg:grid-cols-4 dark:bg-gray-900'>
+              {availableCars?.length > 0 ? (
+                availableCars.map((car) => (
+                  <CarsCard key={car?._id} car={car} />
+                ))
               ) : (
-                <h1 className='text-6xl font-bold text-red-800 '>
-                  No Data Found...
+                <h1 className='text-6xl font-bold text-red-800 dark:text-red-500'>
+                  No Car Found...
                 </h1>
               )}
             </div>

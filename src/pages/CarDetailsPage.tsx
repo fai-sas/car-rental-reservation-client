@@ -65,22 +65,25 @@ const CarDetailsPage = () => {
             </div>
           }
           style={{ borderRadius: '1rem' }}
-          className='shadow-lg'
+          className='shadow-lg dark:bg-gray-800 dark:text-white'
         >
-          <Title level={2} className='text-2xl font-bold'>
+          <Title level={2} className='text-2xl font-bold dark:text-white'>
             {singleCar?.name}
           </Title>
-          <Text className='text-lg text-gray-600'>
+          <Text className='text-lg text-gray-600 dark:text-gray-400'>
             {singleCar?.model} | {singleCar?.year}
           </Text>
-          <Divider className='my-4' />
+          <Divider className='my-4 dark:border-gray-600' />
           <div className='flex flex-col md:flex-row md:justify-between'>
             <div className='flex-1'>
-              <Text className='text-base text-gray-800'>
+              <Text className='text-base text-gray-800 dark:text-gray-300'>
                 {singleCar?.description}
               </Text>
               <div className='mt-4'>
-                <Title level={4} className='text-xl font-semibold'>
+                <Title
+                  level={4}
+                  className='text-xl font-semibold dark:text-white'
+                >
                   Additional Features
                 </Title>
                 <Checkbox.Group
@@ -89,26 +92,33 @@ const CarDetailsPage = () => {
                   className='mt-2'
                 />
                 <div className='mt-4'>
-                  <Title level={4} className='text-xl font-semibold'>
+                  <Title
+                    level={4}
+                    className='text-xl font-semibold dark:text-white'
+                  >
                     Customer Reviews
                   </Title>
                   {/* Placeholder Reviews */}
                   <div className='mt-2'>
                     <div className='flex items-center'>
-                      <Text className='font-semibold'>John Doe</Text>
+                      <Text className='font-semibold dark:text-white'>
+                        John Doe
+                      </Text>
                       <Rate disabled defaultValue={4} className='ml-2' />
                     </div>
-                    <Text className='text-gray-600'>
+                    <Text className='text-gray-600 dark:text-gray-400'>
                       "Great car! Had an amazing experience with smooth ride
                       quality."
                     </Text>
                   </div>
                   <div className='mt-4'>
                     <div className='flex items-center'>
-                      <Text className='font-semibold'>Jane Smith</Text>
+                      <Text className='font-semibold dark:text-white'>
+                        Jane Smith
+                      </Text>
                       <Rate disabled defaultValue={5} className='ml-2' />
                     </div>
-                    <Text className='text-gray-600'>
+                    <Text className='text-gray-600 dark:text-gray-400'>
                       "Perfect for a family trip. Excellent features and
                       comfort."
                     </Text>
@@ -117,45 +127,60 @@ const CarDetailsPage = () => {
               </div>
             </div>
             <div className='md:ml-6'>
-              <Title level={4} className='text-xl font-semibold'>
+              <Title
+                level={4}
+                className='text-xl font-semibold dark:text-white'
+              >
                 Details
               </Title>
               <div className='flex items-center mb-3'>
-                <FaCar className='mr-3 text-2xl text-blue-500' />
-                <Text className='text-lg'>{singleCar?.carType}</Text>
+                <FaCar className='mr-3 text-2xl text-blue-500 dark:text-blue-300' />
+                <Text className='text-lg dark:text-gray-300'>
+                  {singleCar?.carType}
+                </Text>
               </div>
               <div className='flex items-center mb-3'>
-                <FaCalendarAlt className='mr-3 text-2xl text-blue-500' />
-                <Text className='text-lg'>Year: {singleCar?.year}</Text>
+                <FaCalendarAlt className='mr-3 text-2xl text-blue-500 dark:text-blue-300' />
+                <Text className='text-lg dark:text-gray-300'>
+                  Year: {singleCar?.year}
+                </Text>
               </div>
               <div className='flex items-center mb-3'>
-                <FaMapMarkerAlt className='mr-3 text-2xl text-blue-500' />
-                <Text className='text-lg'>Location: {singleCar?.location}</Text>
+                <FaMapMarkerAlt className='mr-3 text-2xl text-blue-500 dark:text-blue-300' />
+                <Text className='text-lg dark:text-gray-300'>
+                  Location: {singleCar?.location}
+                </Text>
               </div>
               <div className='flex items-center mb-3'>
-                <GiSteeringWheel className='mr-3 text-2xl text-blue-500' />
-                <Text className='text-lg'>
+                <GiSteeringWheel className='mr-3 text-2xl text-blue-500 dark:text-blue-300' />
+                <Text className='text-lg dark:text-gray-300'>
                   Transmission: {singleCar?.transmission}
                 </Text>
               </div>
               <div className='flex items-center mb-3'>
-                <GiCarSeat className='mr-3 text-2xl text-blue-500' />
-                <Text className='text-lg'>Seats: {singleCar?.seats}</Text>
+                <GiCarSeat className='mr-3 text-2xl text-blue-500 dark:text-blue-300' />
+                <Text className='text-lg dark:text-gray-300'>
+                  Seats: {singleCar?.seats}
+                </Text>
               </div>
               <div className='flex items-center mb-3'>
-                <Text className='text-lg'>
+                <Text className='text-lg dark:text-gray-300'>
                   Fuel Type: {singleCar?.fuelType}
                 </Text>
               </div>
               <div className='flex items-center mb-3'>
-                <MdSettings className='mr-3 text-2xl text-blue-500' />
-                <Text className='text-lg'>
+                <MdSettings className='mr-3 text-2xl text-blue-500 dark:text-blue-300' />
+                <Text className='text-lg dark:text-gray-300'>
                   Price Per Hour: ${singleCar?.pricePerHour}
                 </Text>
               </div>
               <div className='flex flex-wrap'>
                 {singleCar?.features.map((feature, index) => (
-                  <Tag key={index} color='geekblue' className='mb-2 mr-2'>
+                  <Tag
+                    key={index}
+                    color='geekblue'
+                    className='mb-2 mr-2 dark:bg-gray-700 dark:text-white'
+                  >
                     {feature}
                   </Tag>
                 ))}

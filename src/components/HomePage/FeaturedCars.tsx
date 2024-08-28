@@ -45,7 +45,9 @@ const FeaturedCars = () => {
 
   if (isError || !randomCars?.length) {
     return (
-      <h1 className='text-6xl font-bold text-red-800 '>No Data Found...</h1>
+      <h1 className='text-6xl font-bold text-red-800 dark:text-gray-200 '>
+        No Data Found...
+      </h1>
     )
   }
 
@@ -56,7 +58,9 @@ const FeaturedCars = () => {
       className='container p-8 mx-auto mt-12'
     >
       <div className='flex flex-col items-start w-full max-w-xl px-4 mx-auto lg:px-8 lg:max-w-screen-xl'>
-        <h1 className='text-2xl font-bold '>Featured Cars</h1>
+        <h1 className='text-2xl font-bold dark:text-gray-200 '>
+          Featured Cars
+        </h1>
         <div className='grid grid-cols-1 gap-4 my-8 md:grid-cols-3'>
           {randomCars.map((car) => (
             <CarsCard key={car?._id} car={car} />

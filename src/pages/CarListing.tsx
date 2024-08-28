@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState } from 'react'
 import {
   SearchOutlined,
   SortAscendingOutlined,
@@ -7,17 +7,6 @@ import {
 } from '@ant-design/icons'
 import { Layout, Input, Button, Select, Slider, Pagination } from 'antd'
 import Loader from '../components/Loader'
-import {
-  setSearchTerm,
-  setCategory,
-  setPriceRange,
-  setSortOrder,
-  setCurrentPage,
-  setPageSize,
-  setMaxPrice,
-  clearFilters,
-} from '../redux/features/cars/carsSlice'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import CarsCard from '../components/CarsCard'
 import { useGetAllCarsQuery } from '../redux/features/cars/carsApi'
 import Header from '../components/Header'
@@ -26,81 +15,64 @@ const { Content, Sider } = Layout
 const { Option } = Select
 
 const ProductPage = () => {
-  const dispatch = useAppDispatch()
-  const {
-    searchTerm,
-    category,
-    priceRange,
-    sortOrder,
-    currentPage,
-    pageSize,
-    maxPrice,
-  } = useAppSelector((state) => state.cars)
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [carType, setCarType] = useState<string>('')
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200])
+  const [sortOrder, setSortOrder] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(10)
 
-  // Ensure the correct format for parameters
-  const formattedParams = {
-    searchTerm: searchTerm || '', // Ensure empty string if undefined
-    category: category || '',
-    priceRange: priceRange.length ? priceRange.join(',') : '', // Convert to string if array
-    sort: sortOrder || '',
-    page: currentPage || 1,
-    limit: pageSize || 10,
+  const queryParams = {
+    ...(searchTerm ? { searchTerm } : {}),
+    ...(carType ? { carType } : {}),
+    ...(priceRange && (priceRange[0] !== 0 || priceRange[1] !== 200)
+      ? { priceRange }
+      : {}),
+    ...(sortOrder ? { sort: sortOrder } : {}),
+    page: currentPage,
+    limit: pageSize,
   }
 
-  // Log the formatted parameters
-  console.log('Formatted Params:', formattedParams)
-
-  const { data, isLoading, isError } = useGetAllCarsQuery(formattedParams)
-
-  // Debug: Check the data response
-  console.log('API Response Data:', data)
+  const { data, isLoading, isError } = useGetAllCarsQuery(queryParams)
 
   const products = data?.data || []
-
-  useEffect(() => {
-    if (products.length > 0) {
-      const maxPriceFromData = Math.max(
-        ...products.map((product) => product.price)
-      )
-      dispatch(setMaxPrice(maxPriceFromData))
-    }
-  }, [dispatch, products])
-
-  const carType = [...new Set(products.map((car) => car.carType))]
-
   const totalProducts = data?.meta?.total || 0
 
-  const handleSearch = (value) => {
-    dispatch(setSearchTerm(value))
+  const carTypes = [...new Set(products.map((car) => car?.carType))]
+
+  const handleSearch = (value: string) => setSearchTerm(value)
+
+  const handleCategoryChange = (value: string) => setCarType(value)
+
+  const handlePriceChange = (value: [number, number]) => {
+    setPriceRange(value)
   }
 
-  const handleCategoryChange = (value) => {
-    dispatch(setCategory(value))
-  }
-
-  const handlePriceChange = (value) => {
-    dispatch(setPriceRange(value))
-  }
-
-  const handleSortChange = (value) => {
-    dispatch(setSortOrder(value))
+  const handleSortChange = (value: string) => {
+    setSortOrder(value)
   }
 
   const handleClearFilters = () => {
-    dispatch(clearFilters())
+    setSearchTerm('')
+    setCarType('')
+    setPriceRange([0, 200])
+    setSortOrder('')
+    setCurrentPage(1)
   }
 
-  const handlePageChange = (page, pageSize) => {
-    dispatch(setCurrentPage(page))
-    dispatch(setPageSize(pageSize))
+  const handlePageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page)
+    setPageSize(pageSize)
   }
 
-  if (isLoading) {
-    return <Loader />
-  }
+  if (isLoading) return <Loader />
 
   if (!isLoading && isError) {
-    return <h1 className='text-6xl font-bold text-red-800 '>Error...</h1>
+    return (
+      <h1 className='text-6xl font-bold text-red-800 dark:text-red-500'>
+        Error...
+      </h1>
+    )
   }
 
   return (
@@ -111,43 +83,41 @@ const ProductPage = () => {
           breakpoint='lg'
           collapsedWidth='0'
           onBreakpoint={(broken) => {}}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type)
-          }}
+          onCollapse={(collapsed, type) => {}}
         >
-          <div data-aos='fade-up' data-aos-duration='1000' className='p-4'>
+          <div className='p-4 dark:bg-gray-800'>
             <Input
               placeholder='Search products'
               prefix={<SearchOutlined />}
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
             />
-
             <Select
-              className='w-full my-4 '
+              className='w-full my-4'
               placeholder='Filter by category'
-              value={category}
+              value={carType}
               onChange={handleCategoryChange}
             >
               <Option value=''>All Categories</Option>
-              {carType.map((category) => (
-                <Option key={category} value={category}>
-                  {category}
+              {carTypes.map((carType) => (
+                <Option key={carType} value={carType}>
+                  {carType}
                 </Option>
               ))}
             </Select>
 
             <div className='my-4'>
-              <span className='text-white '>Price Range:</span>
+              <span className='text-white'>Price Per Hour Range:</span>
               <Slider
                 range
-                max={maxPrice}
+                max={200}
                 value={priceRange}
                 onChange={handlePriceChange}
               />
             </div>
+
             <Select
-              className='w-full my-4 text-white'
+              className='w-full my-4'
               placeholder='Sort by price'
               value={sortOrder}
               onChange={handleSortChange}
@@ -160,6 +130,7 @@ const ProductPage = () => {
                 <SortDescendingOutlined /> Price Descending
               </Option>
             </Select>
+
             <Button
               className='w-full'
               type='default'
@@ -170,21 +141,24 @@ const ProductPage = () => {
             </Button>
           </div>
         </Sider>
+
         <Layout>
-          <Content>
+          <Content className='dark:bg-gray-900'>
             <div className='p-8'>
               <Pagination
+                className='text-white dark:bg-gray-900'
                 current={currentPage}
                 pageSize={pageSize}
                 total={totalProducts}
                 onChange={handlePageChange}
               />
             </div>
-            <div className='grid grid-cols-1 gap-4 p-8 my-8 md:grid-cols-3 lg:grid-cols-4'>
+
+            <div className='grid grid-cols-1 gap-4 p-8 my-8 bg-white md:grid-cols-3 lg:grid-cols-4 dark:bg-gray-900'>
               {products.length > 0 ? (
                 products.map((car) => <CarsCard key={car._id} car={car} />)
               ) : (
-                <h1 className='text-6xl font-bold text-red-800 '>
+                <h1 className='text-6xl font-bold text-red-800 dark:text-red-500'>
                   No Data Found...
                 </h1>
               )}
