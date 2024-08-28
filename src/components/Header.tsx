@@ -20,9 +20,17 @@ const Header = () => {
   return (
     <header className='sticky top-0 z-50 bg-gray-900 shadow-md'>
       <div className='flex items-center justify-between max-w-6xl px-6 py-4 mx-auto'>
-        {/* Logo and Company Name */}
-        <div className='text-2xl font-bold text-white'>
-          <Link to='/'>Car Rental Reservation</Link>
+        <div className='text-2xl font-bold text-white '>
+          <Link className='flex items-center justify-center ' to='/'>
+            <img
+              src='https://res.cloudinary.com/codingfreak/image/upload/v1725632761/lhtnewlrkvcevia6nuk1.png'
+              width={50}
+              height={50}
+              className='rounded-full '
+              alt='logo'
+            />
+            <p className='px-4 '>Car Rental Reservation</p>
+          </Link>
         </div>
 
         {/* Menu Toggle Button (for small screens) */}
@@ -74,7 +82,7 @@ const Header = () => {
 
           {!user && (
             <div className='flex flex-col mt-4 space-y-4 md:flex-row md:space-y-0 md:space-x-4 md:mt-0'>
-              <NavLink to='login'>
+              <NavLink to='/login'>
                 <button className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500'>
                   Login
                 </button>
@@ -84,14 +92,12 @@ const Header = () => {
 
           {user && (
             <div className='flex flex-col mt-4 space-y-4 md:flex-row md:space-y-0 md:space-x-4 md:mt-0'>
-              <NavLink to='login'>
-                <button
-                  onClick={handleLogout}
-                  className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500'
-                >
-                  Logout
-                </button>
-              </NavLink>
+              <button
+                onClick={handleLogout}
+                className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500'
+              >
+                Logout
+              </button>
             </div>
           )}
         </nav>

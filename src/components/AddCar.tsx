@@ -6,7 +6,12 @@ import FormController from './Form/FormController'
 import FormInput from './Form/FormInput'
 import FormSelect from './Form/FormSelect'
 import toast from 'react-hot-toast'
-import { FieldValues, SubmitHandler } from 'react-hook-form'
+import {
+  FieldValues,
+  SubmitHandler,
+  useForm,
+  FormProvider,
+} from 'react-hook-form'
 import { useAddCarMutation } from '../redux/features/cars/carsApi'
 import { TResponse } from '../types'
 import { addCarValidationSchema } from '../schemas/CarSchema'
@@ -19,20 +24,60 @@ import {
   statusOptions,
   transmissionOptions,
 } from '../utils/selectOptions'
+import { useState } from 'react'
 
 const AddCar = () => {
   const [addCar] = useAddCarMutation()
+  const [uploading, setUploading] = useState(false)
+
+  const methods = useForm({
+    resolver: zodResolver(addCarValidationSchema),
+  })
+
+  const { register, handleSubmit, setValue, control } = methods
+
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append(
+      'upload_preset',
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+    )
+
+    try {
+      setUploading(true)
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+        }/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      )
+
+      const data = await res.json()
+      setUploading(false)
+
+      if (data.secure_url) {
+        setValue('image', data.secure_url)
+        toast.success('Image uploaded successfully')
+      } else {
+        throw new Error('Failed to upload image')
+      }
+    } catch (err) {
+      setUploading(false)
+      toast.error('Image upload failed')
+    }
+  }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const carData = {
       ...data,
-      image: data.image,
       pricePerHour: Number(data.pricePerHour),
       seats: Number(data.seats),
       year: Number(data.year),
     }
-
-    console.log(carData)
 
     try {
       const res = (await addCar(carData)) as TResponse<any>
@@ -53,110 +98,162 @@ const AddCar = () => {
       <article>
         <Flex justify='center' align='center'>
           <Col span={12}>
-            <FormController
-              onSubmit={onSubmit}
-              resolver={zodResolver(addCarValidationSchema)}
-            >
-              <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                  <FormInput type='text' name='name' label='Name' />
-                </Col>
-                <Col xs={24} lg={12}>
-                  <FormInput
-                    type='text'
-                    name='description'
-                    label='Description'
-                  />
-                </Col>
-              </Row>
+            <FormProvider {...methods}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <FormInput
+                      type='text'
+                      name='name'
+                      label='Name'
+                      register={register}
+                      control={control}
+                    />
+                  </Col>
+                  <Col xs={24} lg={12}>
+                    <FormInput
+                      type='text'
+                      name='description'
+                      label='Description'
+                      register={register}
+                      control={control}
+                    />
+                  </Col>
+                </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                  <FormInput type='text' name='color' label='Color' />
-                </Col>
-                <Col xs={24} lg={12}>
-                  <FormInput type='text' name='image' label='Image' />
-                </Col>
-              </Row>
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <FormInput
+                      type='text'
+                      name='color'
+                      label='Color'
+                      register={register}
+                      control={control}
+                    />
+                  </Col>
+                  <Col xs={24} lg={12}>
+                    {/* File input for image upload */}
+                    <p className='pb-1'>Upload Image</p>
+                    <input
+                      type='file'
+                      accept='image/*'
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          handleImageUpload(e.target.files[0])
+                        }
+                      }}
+                    />
 
-              <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                  <FormInput type='text' name='model' label='Model' />
-                </Col>
-                <Col xs={24} lg={12}>
-                  <FormInput
-                    type='number'
-                    name='pricePerHour'
-                    label='Price Per Hour'
-                  />
-                </Col>
-              </Row>
+                    <input type='hidden' {...register('image')} />
+                  </Col>
+                </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                  <FormInput type='number' name='year' label='Year' />
-                </Col>
-                <Col xs={24} lg={12}>
-                  <FormInput type='number' name='seats' label='Seats' />
-                </Col>
-              </Row>
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <FormInput
+                      type='text'
+                      name='model'
+                      label='Model'
+                      register={register}
+                      control={control}
+                    />
+                  </Col>
+                  <Col xs={24} lg={12}>
+                    <FormInput
+                      type='number'
+                      name='pricePerHour'
+                      label='Price Per Hour'
+                      register={register}
+                      control={control}
+                    />
+                  </Col>
+                </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                  <FormSelect
-                    options={statusOptions}
-                    name='status'
-                    label='Status'
-                  />
-                </Col>
-                <Col xs={24} lg={12}>
-                  <FormSelect
-                    options={carTypeOptions}
-                    name='carType'
-                    label='Car Type'
-                  />
-                </Col>
-              </Row>
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <FormInput
+                      type='number'
+                      name='year'
+                      label='Year'
+                      register={register}
+                      control={control}
+                    />
+                  </Col>
+                  <Col xs={24} lg={12}>
+                    <FormInput
+                      type='number'
+                      name='seats'
+                      label='Seats'
+                      register={register}
+                      control={control}
+                    />
+                  </Col>
+                </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                  <FormSelect
-                    options={fuelOptions}
-                    name='fuelType'
-                    label='Fuel Type'
-                  />
-                </Col>
-                <Col xs={24} lg={12}>
-                  <FormSelect
-                    options={transmissionOptions}
-                    name='transmission'
-                    label='Transmission'
-                  />
-                </Col>
-              </Row>
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <FormSelect
+                      options={statusOptions}
+                      name='status'
+                      label='Status'
+                      control={control}
+                    />
+                  </Col>
+                  <Col xs={24} lg={12}>
+                    <FormSelect
+                      options={carTypeOptions}
+                      name='carType'
+                      label='Car Type'
+                      control={control}
+                    />
+                  </Col>
+                </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                  <FormSelect
-                    options={locationOptions}
-                    name='location'
-                    label='Location'
-                  />
-                </Col>
-                <Col xs={24} lg={12}>
-                  <FormSelect
-                    mode='multiple'
-                    options={featuresOptions}
-                    name='features'
-                    label='Features'
-                  />
-                </Col>
-              </Row>
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <FormSelect
+                      options={fuelOptions}
+                      name='fuelType'
+                      label='Fuel Type'
+                      control={control}
+                    />
+                  </Col>
+                  <Col xs={24} lg={12}>
+                    <FormSelect
+                      options={transmissionOptions}
+                      name='transmission'
+                      label='Transmission'
+                      control={control}
+                    />
+                  </Col>
+                </Row>
 
-              <Button type='primary' htmlType='submit'>
-                Submit
-              </Button>
-            </FormController>
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <FormSelect
+                      options={locationOptions}
+                      name='location'
+                      label='Location'
+                      control={control}
+                    />
+                  </Col>
+                  <Col xs={24} lg={12}>
+                    <FormSelect
+                      mode='multiple'
+                      options={featuresOptions}
+                      name='features'
+                      label='Features'
+                      control={control}
+                    />
+                  </Col>
+                </Row>
+
+                {/* Ant Design Button correctly wired to submit the form */}
+                <Button type='primary' htmlType='submit' loading={uploading}>
+                  {uploading ? 'Uploading...' : 'Submit'}
+                </Button>
+              </form>
+            </FormProvider>
           </Col>
         </Flex>
       </article>
